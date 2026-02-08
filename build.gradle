@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group = 'com.josuealtamirano.tema4gradle'
@@ -10,6 +11,8 @@ repositories {
 }
 
 dependencies {
+    implementation platform("dev.langchain4j:langchain4j-bom:0.35.0")
+    implementation "dev.langchain4j:langchain4j-open-ai"
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -17,4 +20,7 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+application {
+    mainClass = 'com.josuealtamirano.tema4gradle.Main'
 }
