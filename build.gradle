@@ -17,10 +17,34 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
-
 test {
     useJUnitPlatform()
 }
 application {
     mainClass = 'com.josuealtamirano.tema4gradle.Main'
+}
+
+tasks.register('ollamaVersion', Exec) {
+    if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+        commandLine("powershell", "-NoProfile", "-Command", "ollama --version")
+    } else {
+        commandLine("ollama", "--version")
+    }
+}
+
+// Tarea: ollamaPs
+tasks.register('ollamaPs', Exec) {
+    if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+        commandLine("powershell", "-NoProfile", "-Command", "ollama ps")
+    } else {
+        commandLine("ollama", "ps")
+    }
+}
+
+// Tarea: llmInfo (Dependencias)
+tasks.register('llmInfo') {
+    dependsOn 'ollamaVersion', 'ollamaPs'
+    doLast {
+        println "Comprobación de Ollama acabada."
+    }
 }
